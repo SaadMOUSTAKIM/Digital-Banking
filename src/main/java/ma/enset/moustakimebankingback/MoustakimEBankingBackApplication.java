@@ -1,5 +1,6 @@
 package ma.enset.moustakimebankingback;
 
+import ma.enset.moustakimebankingback.dtos.CustomerDTO;
 import ma.enset.moustakimebankingback.entities.*;
 import ma.enset.moustakimebankingback.enums.AccountStatus;
 import ma.enset.moustakimebankingback.enums.operationType;
@@ -32,7 +33,7 @@ public class MoustakimEBankingBackApplication {
     CommandLineRunner commandLineRunner(BankAccountservice bankAccountservice){
         return args -> {
             Stream.of("Achraf","Alaa","Kaoutar").forEach(name->{
-                Customer customer=new Customer();
+                CustomerDTO customer=new CustomerDTO();
                 customer.setName(name);
                 customer.setEmail(name+"@gmail.com");
                 bankAccountservice.saveCustomer(customer);
