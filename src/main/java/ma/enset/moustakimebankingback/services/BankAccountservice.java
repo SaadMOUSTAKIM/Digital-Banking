@@ -1,6 +1,9 @@
 package ma.enset.moustakimebankingback.services;
 
+import ma.enset.moustakimebankingback.dtos.BankAccountDTO;
+import ma.enset.moustakimebankingback.dtos.CurrentBankAccountDTO;
 import ma.enset.moustakimebankingback.dtos.CustomerDTO;
+import ma.enset.moustakimebankingback.dtos.SavingBankAccountDTO;
 import ma.enset.moustakimebankingback.entities.BankAccount;
 import ma.enset.moustakimebankingback.entities.CurrentAccount;
 import ma.enset.moustakimebankingback.entities.Customer;
@@ -13,15 +16,15 @@ import java.util.List;
 
 public interface BankAccountservice {
     CustomerDTO saveCustomer(CustomerDTO customerDTO);
-    CurrentAccount saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
-    SavingAccount saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
+    CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
+    SavingBankAccountDTO saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
     List<CustomerDTO> listCustomers();
-    BankAccount getBankAccount(String accountId) throws BankAccountNOtFoundException;
+    BankAccountDTO getBankAccount(String accountId) throws BankAccountNOtFoundException;
     void debit(String accountId, double amount, String description) throws BankAccountNOtFoundException, BalanceNotSufficientException;
     void credit(String accountId, double amount, String description) throws BankAccountNOtFoundException;
     void transfert(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNOtFoundException, BalanceNotSufficientException;
 
-    List<BankAccount> bankAccountList();
+    List<BankAccountDTO> bankAccountList();
 
     CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException;
 
