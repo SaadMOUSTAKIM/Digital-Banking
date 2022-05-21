@@ -45,23 +45,24 @@ public class MoustakimEBankingBackApplication {
                 try {
                     bankAccountservice.saveCurrentBankAccount(Math.random()*80000,8000, customer.getId());
                     bankAccountservice.saveSavingBankAccount(Math.random()*10000,5.5, customer.getId());
-                    List<BankAccountDTO> bankAccountList=bankAccountservice.bankAccountList();
-                    for (BankAccountDTO bankAccount:bankAccountList) {
-                        for (int i = 0; i < 10 ; i++) {
-                            String accountId;
-                            if(bankAccount instanceof SavingBankAccountDTO){
-                                accountId=((SavingBankAccountDTO) bankAccount).getId();
-                            }else {
-                                accountId=((CurrentBankAccountDTO) bankAccount).getId();
-                            }
-                            bankAccountservice.credit(accountId, 10000+Math.random()*12000,"Credit");
-                            bankAccountservice.debit(accountId, 1000+Math.random()*9000,"Credit");
-                        }
-                    }
-                } catch (CustomerNotFoundException | BankAccountNOtFoundException | BalanceNotSufficientException e) {
+
+                } catch (CustomerNotFoundException e) {
                     e.printStackTrace();
                 }
             });
+            List<BankAccountDTO> bankAccountList=bankAccountservice.bankAccountList();
+            for (BankAccountDTO bankAccount:bankAccountList) {
+                for (int i = 0; i < 10 ; i++) {
+                    String accountId;
+                    if(bankAccount instanceof SavingBankAccountDTO){
+                        accountId=((SavingBankAccountDTO) bankAccount).getId();
+                    }else {
+                        accountId=((CurrentBankAccountDTO) bankAccount).getId();
+                    }
+                    bankAccountservice.credit(accountId, 10000+Math.random()*12000,"Credit");
+                    bankAccountservice.debit(accountId, 1000+Math.random()*9000,"Credit");
+                }
+            }
         };
     }
 

@@ -1,13 +1,6 @@
 package ma.enset.moustakimebankingback.services;
 
-import ma.enset.moustakimebankingback.dtos.BankAccountDTO;
-import ma.enset.moustakimebankingback.dtos.CurrentBankAccountDTO;
-import ma.enset.moustakimebankingback.dtos.CustomerDTO;
-import ma.enset.moustakimebankingback.dtos.SavingBankAccountDTO;
-import ma.enset.moustakimebankingback.entities.BankAccount;
-import ma.enset.moustakimebankingback.entities.CurrentAccount;
-import ma.enset.moustakimebankingback.entities.Customer;
-import ma.enset.moustakimebankingback.entities.SavingAccount;
+import ma.enset.moustakimebankingback.dtos.*;
 import ma.enset.moustakimebankingback.exceptions.BalanceNotSufficientException;
 import ma.enset.moustakimebankingback.exceptions.BankAccountNOtFoundException;
 import ma.enset.moustakimebankingback.exceptions.CustomerNotFoundException;
@@ -31,4 +24,8 @@ public interface BankAccountservice {
     CustomerDTO updateCustomer(CustomerDTO customerDTO);
 
     void deleteCustomer(Long customerId);
+
+    List<AccountOperationDTO> accountHistory(String accountId);
+
+    AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNOtFoundException;
 }
