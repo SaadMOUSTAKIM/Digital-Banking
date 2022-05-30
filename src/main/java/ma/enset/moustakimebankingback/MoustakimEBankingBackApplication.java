@@ -48,7 +48,7 @@ public class MoustakimEBankingBackApplication {
         return args -> {
             accountService.addNewRole(new AppRole(null,"USER"));
             accountService.addNewRole(new AppRole(null,"SUPER_ADMIN"));
-            accountService.addNewRole(new AppRole(null," ADMIN"));
+            accountService.addNewRole(new AppRole(null,"ADMIN"));
 
             accountService.addNewUser(new AppUser(null,"mouatta","mouatta@mail.com","123",new ArrayList<>()));
             accountService.addNewUser(new AppUser(null,"kabboura","kabboura@mail.com","123",new ArrayList<>()));
@@ -64,8 +64,8 @@ public class MoustakimEBankingBackApplication {
     }
 
 
-   @Bean
-    CommandLineRunner commandLineRunner(BankAccountservice bankAccountservice){
+   //@Bean
+    CommandLineRunner commandLineRunner(BankAccountservice bankAccountservice,AccountService accountService){
         return args -> {
             Stream.of("Achraf","Alaa","Kaoutar").forEach(name->{
                 CustomerDTO customer=new CustomerDTO();
@@ -95,6 +95,23 @@ public class MoustakimEBankingBackApplication {
                     bankAccountservice.debit(accountId, 1000+Math.random()*9000,"Credit");
                 }
             }
+
+            accountService.addNewRole(new AppRole(null,"USER"));
+            accountService.addNewRole(new AppRole(null,"SUPER_ADMIN"));
+            accountService.addNewRole(new AppRole(null,"ADMIN"));
+
+            accountService.addNewUser(new AppUser(null,"mouatta","mouatta@mail.com","123",new ArrayList<>()));
+            accountService.addNewUser(new AppUser(null,"kabboura","kabboura@mail.com","123",new ArrayList<>()));
+            accountService.addNewUser(new AppUser(null,"sahel","sahel@mail.com","123",new ArrayList<>()));
+
+            accountService.addRoleToUser("mouatta","ADMIN");
+            accountService.addRoleToUser("mouatta","SUPER_ADMIN");
+            accountService.addRoleToUser("mouatta","USER");
+            accountService.addRoleToUser("kabboura","ADMIN");
+            accountService.addRoleToUser("kabboura","USER");
+            accountService.addRoleToUser("sahel","USER");
+
+
         };
     }
 

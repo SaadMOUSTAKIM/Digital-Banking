@@ -22,6 +22,10 @@ public class CustomerRestService {
         return bankAccountservice.listCustomers();
     }
 
+    @GetMapping("/customers/search")
+    public List<CustomerDTO> searchCustomers(@RequestParam(name = "keyword",defaultValue = "") String keyword){
+        return bankAccountservice.searchCustomers("%"+keyword+"%");
+    }
     @GetMapping("/customers/{id}")
     public CustomerDTO getCustomer(@PathVariable(name = "id") Long custometID) throws CustomerNotFoundException {
         return bankAccountservice.getCustomer(custometID);
@@ -35,7 +39,6 @@ public class CustomerRestService {
         customerDTO.setId(customerId);
         return bankAccountservice.updateCustomer(customerDTO);
     }
-
     @DeleteMapping("/customers/{id}")
     public void deleteCustomer(@PathVariable Long id){
         bankAccountservice.deleteCustomer(id);
