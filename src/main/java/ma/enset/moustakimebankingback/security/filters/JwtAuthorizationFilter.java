@@ -25,9 +25,7 @@ import java.util.Collection;
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println("header vvvv"+request.getHeader(JWTUtil.AUTH_HEADER));
         if(request.getServletPath().equals("/auth/refreshToken") || request.getServletPath().equals("/login")){
-            System.out.println("hopa lopa");
             filterChain.doFilter(request,response);
         }
         else {
@@ -49,7 +47,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                     filterChain.doFilter(request,response);
                 }catch (AuthenticationException | TokenExpiredException e){
-                    System.out.println("Hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
                     response.resetBuffer ();
                     response.setStatus (HttpServletResponse.SC_UNAUTHORIZED);
                     response.flushBuffer ();

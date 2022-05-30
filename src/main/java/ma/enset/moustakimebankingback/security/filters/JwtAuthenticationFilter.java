@@ -68,7 +68,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
         Map<String,String> idToken = new HashMap<>();
-        System.out.println("**************************** first authentication request");
         idToken.put("accessT",JwtAccessToken);
         idToken.put("refreshT",JwtRefreshToken);
         idToken.put("user",accountServiceImpl.loadUserByUsernameWithoutPass(user.getUsername()));
