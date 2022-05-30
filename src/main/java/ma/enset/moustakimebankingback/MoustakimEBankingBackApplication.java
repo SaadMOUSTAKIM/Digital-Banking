@@ -13,13 +13,19 @@ import ma.enset.moustakimebankingback.exceptions.CustomerNotFoundException;
 import ma.enset.moustakimebankingback.repositories.AccountOperationRepository;
 import ma.enset.moustakimebankingback.repositories.BankAccountRepository;
 import ma.enset.moustakimebankingback.repositories.CustomerRepository;
+import ma.enset.moustakimebankingback.security.entities.AppRole;
+import ma.enset.moustakimebankingback.security.entities.AppUser;
+import ma.enset.moustakimebankingback.security.service.AccountService;
 import ma.enset.moustakimebankingback.services.BankAccountservice;
 import ma.enset.moustakimebankingback.services.BankService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -33,6 +39,32 @@ public class MoustakimEBankingBackApplication {
     }
 
     @Bean
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    //@Bean
+    CommandLineRunner commandLineRunner(AccountService accountService){
+        return args -> {
+            accountService.addNewRole(new AppRole(null,"USER"));
+            accountService.addNewRole(new AppRole(null,"SUPER_ADMIN"));
+            accountService.addNewRole(new AppRole(null," ADMIN"));
+
+            accountService.addNewUser(new AppUser(null,"mouatta","mouatta@mail.com","123",new ArrayList<>()));
+            accountService.addNewUser(new AppUser(null,"kabboura","kabboura@mail.com","123",new ArrayList<>()));
+            accountService.addNewUser(new AppUser(null,"sahel","sahel@mail.com","123",new ArrayList<>()));
+
+            accountService.addRoleToUser("mouatta","ADMIN");
+            accountService.addRoleToUser("mouatta","SUPER_ADMIN");
+            accountService.addRoleToUser("mouatta","USER");
+            accountService.addRoleToUser("kabboura","ADMIN");
+            accountService.addRoleToUser("kabboura","USER");
+            accountService.addRoleToUser("sahel","USER");
+        };
+    }
+
+
+   @Bean
     CommandLineRunner commandLineRunner(BankAccountservice bankAccountservice){
         return args -> {
             Stream.of("Achraf","Alaa","Kaoutar").forEach(name->{
